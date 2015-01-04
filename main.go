@@ -35,8 +35,9 @@ func main() {
 		}
 	}
 
-	// Download the file
 	url := repo + pkg[:2] + "/" + pkg + "/" + pkg + ext
+
+	// Download the file
 	if err := DownloadFile(url, pkg+ext, o, force, true); err != nil {
 		o.ErrExit("Could not download " + pkg + " from AUR.")
 	}
@@ -47,14 +48,12 @@ func main() {
 	}
 
 	// Extract the file
-	cmd := exec.Command("tar", "zxf", pkg+ext)
-	if _, err := cmd.Output(); err != nil {
+	if _, err := exec.Command("tar", "zxf", pkg+ext).Output(); err != nil {
 		o.ErrExit("Could not extract " + pkg + ext)
 	}
 
 	// Remove the file
-	cmd = exec.Command("rm", pkg+ext)
-	if _, err := cmd.Output(); err != nil {
+	if _, err := exec.Command("rm", pkg+ext).Output(); err != nil {
 		o.ErrExit("Could not remove " + pkg + ext)
 	}
 
