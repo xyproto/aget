@@ -19,10 +19,7 @@ type Output struct {
 }
 
 func NewOutput(color bool, enabled bool) *Output {
-	var o *Output = new(Output)
-	o.color = color
-	o.enabled = enabled
-	return o
+	return &Output{color, enabled}
 }
 
 func (o *Output) Err(msg string) {
