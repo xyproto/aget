@@ -25,10 +25,16 @@ func NewOutput(color bool, enabled bool) *Output {
 	return o
 }
 
-func (o *Output) ErrText(msg string) {
+func (o *Output) Err(msg string) {
 	if o.enabled {
-		fmt.Fprintf(os.Stderr, o.DarkRedText(msg)+"\n")
+		fmt.Fprintf(os.Stderr, o.DarkRed(msg)+"\n")
 	}
+}
+
+// Print the message as red text and exit with errorlevel 1
+func (o *Output) Exit(msg string) {
+	o.Err(msg)
+	os.Exit(1)
 }
 
 func (o *Output) Println(msg string) {
@@ -57,46 +63,46 @@ func (o *Output) colorOff() string {
 
 // TODO: Consider generating the following functions as closures instead
 
-func (o *Output) DarkRedText(s string) string {
+func (o *Output) DarkRed(s string) string {
 	return o.colorOn(0, 31) + s + o.colorOff()
 }
 
-func (o *Output) LightGreenText(s string) string {
+func (o *Output) LightGreen(s string) string {
 	return o.colorOn(1, 32) + s + o.colorOff()
 }
 
-func (o *Output) DarkGreenText(s string) string {
+func (o *Output) DarkGreen(s string) string {
 	return o.colorOn(0, 32) + s + o.colorOff()
 }
 
-func (o *Output) LightYellowText(s string) string {
+func (o *Output) LightYellow(s string) string {
 	return o.colorOn(1, 33) + s + o.colorOff()
 }
 
-func (o *Output) DarkYellowText(s string) string {
+func (o *Output) DarkYellow(s string) string {
 	return o.colorOn(0, 33) + s + o.colorOff()
 }
 
-func (o *Output) LightBlueText(s string) string {
+func (o *Output) LightBlue(s string) string {
 	return o.colorOn(1, 34) + s + o.colorOff()
 }
 
-func (o *Output) DarkBlueText(s string) string {
+func (o *Output) DarkBlue(s string) string {
 	return o.colorOn(0, 34) + s + o.colorOff()
 }
 
-func (o *Output) LightCyanText(s string) string {
+func (o *Output) LightCyan(s string) string {
 	return o.colorOn(1, 36) + s + o.colorOff()
 }
 
-func (o *Output) LightPurpleText(s string) string {
+func (o *Output) LightPurple(s string) string {
 	return o.colorOn(1, 35) + s + o.colorOff()
 }
 
-func (o *Output) DarkPurpleText(s string) string {
+func (o *Output) DarkPurple(s string) string {
 	return o.colorOn(0, 35) + s + o.colorOff()
 }
 
-func (o *Output) DarkGrayText(s string) string {
+func (o *Output) DarkGray(s string) string {
 	return o.colorOn(1, 30) + s + o.colorOff()
 }

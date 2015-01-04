@@ -9,9 +9,11 @@ Aurtic is written in Go and intended for use on Arch Linux.
 Examples
 --------
 
+Download the ld-lsb package from AUR:
+
 `aurtic ld-lsb`
 
-Or for overwriting existing files and folders:
+Same thing, but will overwrite existing files:
 
 `aurtic -f ld-lsb`
 
