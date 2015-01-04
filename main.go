@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/xyproto/textgui"
 	"os"
 	"os/exec"
 )
@@ -12,11 +13,11 @@ const (
 )
 
 func main() {
-	o := NewOutput(true, true)
+	o := textgui.NewTextOutput(true, true)
 
 	if len(os.Args) < 2 {
 		o.Println(o.LightBlue("aurtic " + version))
-		o.Exit("Supply a package name as an argument")
+		o.ErrExit("Supply a package name as an argument")
 	}
 
 	// TODO: use a package for optparsing
@@ -37,24 +38,24 @@ func main() {
 	// Download the file
 	url := repo + pkg[:2] + "/" + pkg + "/" + pkg + ext
 	if err := DownloadFile(url, pkg+ext, o, force, true); err != nil {
-		o.Exit("Could not download " + pkg + " from AUR.")
+		o.ErrExit("Could not download " + pkg + " from AUR.")
 	}
 
 	// Check if the directory exists (and that force is not enabled)
 	if _, err := os.Stat(pkg); err == nil && (!force) {
-		o.Exit(pkg + " already exists. Use -f to overwrite.")
+		o.ErrExit(pkg + " already exists. Use -f to overwrite.")
 	}
 
 	// Extract the file
 	cmd := exec.Command("tar", "zxf", pkg+ext)
 	if _, err := cmd.Output(); err != nil {
-		o.Exit("Could not extract " + pkg + ext)
+		o.ErrExit("Could not extract " + pkg + ext)
 	}
 
 	// Remove the file
 	cmd = exec.Command("rm", pkg+ext)
 	if _, err := cmd.Output(); err != nil {
-		o.Exit("Could not remove " + pkg + ext)
+		o.ErrExit("Could not remove " + pkg + ext)
 	}
 
 }
