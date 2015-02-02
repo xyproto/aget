@@ -4,12 +4,13 @@ import (
 	"github.com/xyproto/textgui"
 	"os"
 	"os/exec"
+	"path/filepath"
 )
 
 const (
 	ext     = ".tar.gz"
 	repo    = "https://aur.archlinux.org/packages/"
-	version = "0.1"
+	version = "0.2"
 )
 
 func main() {
@@ -43,13 +44,34 @@ func main() {
 	}
 
 	// Check if the directory exists (and that force is not enabled)
-	if _, err := os.Stat(pkg); err == nil && (!force) {
-		o.ErrExit(pkg + " already exists. Use -f to overwrite.")
+	if _, err := os.Stat(pkg); err == nil {
+		if force {
+			// Remove the directory
+			if _, err := exec.Command("rm", "-rf", pkg).Output(); err != nil {
+				o.ErrExit("Could not remove: " + pkg)
+			}
+		} else {
+			o.ErrExit(pkg + " already exists. Use -f to overwrite.")
+		}
 	}
 
 	// Extract the file
 	if _, err := exec.Command("tar", "zxf", pkg+ext).Output(); err != nil {
 		o.ErrExit("Could not extract " + pkg + ext)
+	}
+
+	//
+	matches, err := filepath.Glob(pkg + "/*")
+	if err != nil {
+		o.ErrExit("Could not glob")
+	}
+
+	for _, filename := range matches {
+		o.Println(filename)
+		// Set the permissions to 644
+		if _, err := exec.Command("chmod", "644", filename).Output(); err != nil {
+			o.ErrExit("Could not set permissions for " + pkg)
+		}
 	}
 
 	// Remove the file
