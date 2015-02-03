@@ -65,20 +65,20 @@ func main() {
 		o.ErrExit("Could not extract " + pkg + ext)
 	}
 
-	//
-	matches, err := filepath.Glob(pkg + "/*")
-	if err != nil {
-		o.ErrExit("Could not glob")
-	}
-
-	for _, filename := range matches {
-		if file, err := IsFile(filename); file && (err != nil) {
-			// Set the permissions to 644
-			if _, err := exec.Command("chmod", "644", pkg+"/"+filename).Output(); err != nil {
-				o.ErrExit("Could not set permissions for " + pkg)
-			}
-		}
-	}
+	// Setting premissions for the files, after extracting
+	//matches, err := filepath.Glob(pkg + "/*")
+	//if err != nil {
+	//	o.ErrExit("Could not glob")
+	//}
+	//for _, filename := range matches {
+	//	if file, err := IsFile(filename); file && (err != nil) {
+	//		// Set the permissions to 644
+	//		o.Println("changing perms for " + pkg + "/" + filename)
+	//		if _, err := exec.Command("chmod", "644", pkg+"/"+filename).Output(); err != nil {
+	//			o.ErrExit("Could not set permissions for " + pkg+"/"+filename)
+	//		}
+	//	}
+	//}
 
 	// Remove the file
 	if _, err := exec.Command("rm", pkg+ext).Output(); err != nil {
