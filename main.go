@@ -13,6 +13,12 @@ const (
 	version = "0.2"
 )
 
+// Thanks user2229691 on stackoverflow
+func IsDirectory(path string) (bool, error) {
+    fileInfo, err := os.Stat(path)
+    return fileInfo.IsDir(), err
+}
+
 func main() {
 	o := textgui.NewTextOutput(true, true)
 
@@ -67,9 +73,11 @@ func main() {
 	}
 
 	for _, filename := range matches {
-		// Set the permissions to 644
-		if _, err := exec.Command("chmod", "644", filename).Output(); err != nil {
-			o.ErrExit("Could not set permissions for " + pkg)
+		if dir, err := IsDirectory(filename); !dir && err != nil {
+			// Set the permissions to 644
+			if _, err := exec.Command("chmod", "644", filename).Output(); err != nil {
+				o.ErrExit("Could not set permissions for " + pkg)
+			}
 		}
 	}
 
