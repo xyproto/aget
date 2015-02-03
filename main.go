@@ -67,7 +67,6 @@ func main() {
 	}
 
 	for _, filename := range matches {
-		o.Println(filename)
 		// Set the permissions to 644
 		if _, err := exec.Command("chmod", "644", filename).Output(); err != nil {
 			o.ErrExit("Could not set permissions for " + pkg)
