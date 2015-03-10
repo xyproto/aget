@@ -17,3 +17,9 @@ Same thing, but will overwrite existing files:
 
 `aurtic -f ld-lsb`
 
+
+Installation
+------------
+
+One way is to install it from AUR, another way is:
+`go get github.com/xyproto/aurtic`
