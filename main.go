@@ -4,7 +4,7 @@ import (
 	"github.com/xyproto/textgui"
 	"os"
 	"os/exec"
-	"path/filepath"
+	//	"path/filepath"
 )
 
 const (
