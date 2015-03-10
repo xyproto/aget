@@ -1,7 +1,7 @@
 aurtic
 ======
 
-The fastest way to download and extract a source package from AUR.
+Possibly the fastest way to download and extract a source package from AUR.
 
 Aurtic is written in Go and intended for use on Arch Linux.
 
