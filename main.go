@@ -5,13 +5,12 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-	//"path/filepath"
 )
 
 const (
 	ext     = ".tar.gz"
 	repo    = "https://aur.archlinux.org/packages/"
-	version = "0.3"
+	version = "0.31"
 )
 
 func isFile(path string) (bool, error) {
@@ -45,8 +44,9 @@ func main() {
 	// If the name ends with ".git", clone from AUR4
 	if strings.HasSuffix(pkg, ".git") {
 		url := "ssh+git://aur@aur4.archlinux.org/" + pkg + "/"
+		o.Println("git clone " + url)
 		if _, err := exec.Command("git", "clone", url).Output(); err != nil {
-			o.ErrExit("Could not clone " + pkg)
+			o.ErrExit("Could not clone " + pkg + ": " + err.Error())
 		}
 		return
 	}

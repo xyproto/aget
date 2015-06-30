@@ -28,4 +28,5 @@ One way is to install it from AUR, another way is:
 
 General information
 -------------------
-* Version: 0.3
+* Version: 0.31
+* Alexander F Rødseth <xyproto@archlinux.org>
