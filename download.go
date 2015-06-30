@@ -3,7 +3,7 @@ package main
 import (
 	"bytes"
 	"errors"
-	"github.com/xyproto/textgui"
+	"github.com/xyproto/term"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -15,7 +15,7 @@ import (
  * force is for allowing to overwrite the file when downloading
  * htmlcheck is for checking if the downloaded file contains "<html" or not
  */
-func DownloadFile(url, filename string, o *textgui.TextOutput, force, htmlcheck bool) error {
+func DownloadFile(url, filename string, o *term.TextOutput, force, htmlcheck bool) error {
 	var client http.Client
 	resp, err := client.Get(url)
 	if err != nil {

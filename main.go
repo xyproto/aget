@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/xyproto/textgui"
+	"github.com/xyproto/term"
 	"os"
 	"os/exec"
 	"strings"
@@ -20,7 +20,7 @@ func isFile(path string) (bool, error) {
 }
 
 func main() {
-	o := textgui.NewTextOutput(true, true)
+	o := term.NewTextOutput(true, true)
 
 	if len(os.Args) < 2 {
 		o.Println(o.LightBlue("aurtic " + version))
