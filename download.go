@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-/* Download a file
+/*DownloadFile can download a file.
  *
  * o is for colored text
  * force is for allowing to overwrite the file when downloading

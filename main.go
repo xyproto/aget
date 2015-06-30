@@ -4,16 +4,17 @@ import (
 	"github.com/xyproto/textgui"
 	"os"
 	"os/exec"
-	//	"path/filepath"
+	"strings"
+	//"path/filepath"
 )
 
 const (
 	ext     = ".tar.gz"
 	repo    = "https://aur.archlinux.org/packages/"
-	version = "0.2"
+	version = "0.3"
 )
 
-func IsFile(path string) (bool, error) {
+func isFile(path string) (bool, error) {
 	fileInfo, err := os.Stat(path)
 	return fileInfo.Mode().IsRegular(), err
 }
@@ -39,6 +40,15 @@ func main() {
 			force = true
 			pkg = os.Args[1]
 		}
+	}
+
+	// If the name ends with ".git", clone from AUR4
+	if strings.HasSuffix(pkg, ".git") {
+		url := "ssh+git://aur@aur4.archlinux.org/" + pkg + "/"
+		if _, err := exec.Command("git", "clone", url).Output(); err != nil {
+			o.ErrExit("Could not clone " + pkg)
+		}
+		return
 	}
 
 	url := repo + pkg[:2] + "/" + pkg + "/" + pkg + ext
@@ -71,7 +81,7 @@ func main() {
 	//	o.ErrExit("Could not glob")
 	//}
 	//for _, filename := range matches {
-	//	if file, err := IsFile(filename); file && (err != nil) {
+	//	if file, err := isFile(filename); file && (err != nil) {
 	//		// Set the permissions to 644
 	//		o.Println("changing perms for " + pkg + "/" + filename)
 	//		if _, err := exec.Command("chmod", "644", pkg+"/"+filename).Output(); err != nil {
