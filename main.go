@@ -10,7 +10,7 @@ import (
 const (
 	ext     = ".tar.gz"
 	repo    = "https://aur.archlinux.org/packages/"
-	version = "0.31"
+	version = "0.32"
 )
 
 func isFile(path string) (bool, error) {
@@ -41,9 +41,14 @@ func main() {
 		}
 	}
 
+	// Add a .git suffix, if missing
+	if !strings.HasSuffix(pkg, ".git") {
+		pkg = pkg + ".git"
+	}
+
 	// If the name ends with ".git", clone from AUR4
 	if strings.HasSuffix(pkg, ".git") {
-		url := "ssh+git://aur@aur4.archlinux.org/" + pkg + "/"
+		url := "ssh+git://aur@aur.archlinux.org/" + pkg + "/"
 		o.Println("git clone " + url)
 		if _, err := exec.Command("git", "clone", url).Output(); err != nil {
 			o.ErrExit("Could not clone " + pkg + ": " + err.Error())

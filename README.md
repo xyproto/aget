@@ -3,8 +3,6 @@ aurtic
 
 Possibly the fastest way to download and extract a source package from AUR.
 
-Downloads from AUR4 if the package name ends with ".git".
-
 Aurtic is written in Go and intended for use on Arch Linux.
 
 
@@ -24,9 +22,10 @@ Installation
 ------------
 
 One way is to install it from AUR, another way is:
+
 `go get github.com/xyproto/aurtic`
 
 General information
 -------------------
-* Version: 0.31
+* Version: 0.32
 * Alexander F Rødseth <xyproto@archlinux.org>
