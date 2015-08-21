@@ -1,7 +1,13 @@
 aurtic
 ======
 
-Possibly the fastest way to download and extract a source package from AUR.
+Deprecated
+----------
+
+Since the transition to AUR4, aurtic is just a git wrapper. This can be done just as well with a simple shell function. Therefore, I consider this project to be deprecated.
+
+About
+-----
 
 Aurtic is written in Go and intended for use on Arch Linux.
 
@@ -12,11 +18,6 @@ Examples
 Download the ld-lsb package from AUR:
 
 `aurtic ld-lsb`
-
-Same thing, but will overwrite existing files:
-
-`aurtic -f ld-lsb`
-
 
 Installation
 ------------
