@@ -28,5 +28,5 @@ One way is to install it from AUR, another way is:
 
 General information
 -------------------
-* Version: 0.4
+* Version: 0.5
 * Alexander F Rødseth <xyproto@archlinux.org>

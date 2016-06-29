@@ -1,13 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"github.com/xyproto/term"
 	"os"
 	"os/exec"
 )
 
 const (
-	version = "0.4"
+	version = "0.5"
 )
 
 func isFile(path string) (bool, error) {
@@ -26,6 +27,11 @@ func main() {
 	}
 
 	pkg := os.Args[1]
+
+	if _, err := os.Stat(pkg); err == nil {
+		fmt.Print(o.DarkGray("Directory already exists: "))
+		o.ErrExit(pkg)
+	}
 
 	url := "ssh://aur@aur.archlinux.org/" + pkg + ".git"
 	o.Println("git clone " + url)
