@@ -1,15 +1,14 @@
 package main
 
 import (
-	"fmt"
-	"github.com/xyproto/term"
+	"bytes"
+	"github.com/urfave/cli/v2"
+	"github.com/xyproto/textoutput"
 	"os"
 	"os/exec"
 )
 
-const (
-	version = "1.0.0"
-)
+const versionString = "aget 1.0.0"
 
 func isFile(path string) (bool, error) {
 	fileInfo, err := os.Stat(path)
@@ -20,26 +19,65 @@ func isFile(path string) (bool, error) {
 }
 
 func main() {
-	o := term.NewTextOutput(true, true)
+	o := textoutput.New()
+	if appErr := (&cli.App{
+		Name:  "aget",
+		Usage: "clone AUR packages with git",
+		Flags: []cli.Flag{
+			&cli.BoolFlag{Name: "silent", Aliases: []string{"s"}},
+			&cli.BoolFlag{Name: "version", Aliases: []string{"V"}},
+		},
+		Action: func(c *cli.Context) error {
+			if c.Bool("version") {
+				o.Println(versionString)
+				os.Exit(0)
+			}
+			// Check if text output should be disabled
+			if c.Bool("silent") {
+				o.Disable()
+			}
+			packageNames := []string{}
+			// Check if any arguments are given
+			if c.NArg() > 0 {
+				packageNames = c.Args().Slice()
+			} else {
+				o.ErrExit("Supply a package name as an argument")
+			}
 
-	// TODO: use the codegangsta/cli package
-
-	if len(os.Args) < 2 {
-		o.Println(o.LightBlue("aurtic " + version))
-		o.ErrExit("Supply a package name as an argument")
-	}
-
-	pkg := os.Args[1]
-
-	if _, err := os.Stat(pkg); err == nil {
-		fmt.Print(o.DarkGray("Directory already exists: "))
-		o.ErrExit(pkg)
-	}
-
-	url := "ssh://aur@aur.archlinux.org/" + pkg + ".git"
-	o.Println("git clone " + url)
-	if _, err := exec.Command("git", "clone", url).Output(); err != nil {
-		o.ErrExit("Could not clone " + pkg + ": " + err.Error())
+			// Treat all arguments as AUR packages that should be cloned
+			var err error
+			for _, packageName := range packageNames {
+				if _, err := os.Stat(packageName); err == nil {
+					o.Println("<darkred>Directory already exists.</darkred><yellow>Skipping: " + packageName + "</yellow>")
+					continue
+				}
+				url := "ssh://aur@aur.archlinux.org/" + packageName + ".git"
+				o.Println("<green>git clone " + url + "</green>")
+				cmd := exec.Command("git", "clone", url)
+				var stdoutBuf, stderrBuf bytes.Buffer
+				cmd.Stdout = &stdoutBuf
+				cmd.Stderr = &stderrBuf
+				if err := cmd.Start(); err != nil {
+					o.Printf("<yellow>%s</yellow>\n", err)
+					o.Printf("<yellow>%s</yellow>\n", stdoutBuf.String())
+					o.Printf("<red>%s</red>\n", stderrBuf.String())
+					continue
+				}
+				if err := cmd.Wait(); err != nil {
+					o.Printf("<yellow>%s</yellow>\n", err)
+					o.Printf("<yellow>%s</yellow>\n", stdoutBuf.String())
+					o.Printf("<red>%s</red>\n", stderrBuf.String())
+					continue
+				}
+				//if output, err := cmd.Output(); err != nil {
+				//	o.Printf("<darkred>Could not clone %s: %s</darkred>\n", packageName, output)
+				//	continue
+				//}
+			}
+			return err
+		},
+	}).Run(os.Args); appErr != nil {
+		o.ErrExit(appErr.Error())
 	}
 
 }
