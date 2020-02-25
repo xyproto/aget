@@ -1,32 +1,21 @@
-aurtic
-======
+# aget
 
-Deprecated
-----------
+`git clone` a package from AUR (the unofficial Arch Linux package repository that contains user-submitted packages), without having to remembering the URL.
 
-Since the transition to AUR4, aurtic is just a git wrapper. This can be done just as well with a simple shell function. Therefore, I consider this project to be deprecated.
+## Example use
 
-About
------
+Download the `ld-lsb` package from AUR:
 
-Aurtic is written in Go and intended for use on Arch Linux.
+`aget ld-lsb`
 
-
-Examples
---------
-
-Download the ld-lsb package from AUR:
-
-`aurtic ld-lsb`
-
-Installation
-------------
+## Installation
 
 One way is to install it from AUR, another way is:
 
-`go get github.com/xyproto/aurtic`
+`go get -u github.com/xyproto/aget`
 
-General information
--------------------
-* Version: 0.5
-* Alexander F Rødseth <xyproto@archlinux.org>
+## General information
+
+* Version: 1.0.0
+* Author: Alexander F. Rødseth <xyproto@archlinux.org>
+* License: MIT
