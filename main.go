@@ -8,12 +8,15 @@ import (
 )
 
 const (
-	version = "0.5"
+	version = "1.0.0"
 )
 
 func isFile(path string) (bool, error) {
 	fileInfo, err := os.Stat(path)
-	return fileInfo.Mode().IsRegular(), err
+	if err != nil {
+		return false, err
+	}
+	return fileInfo.Mode().IsRegular(), nil
 }
 
 func main() {
