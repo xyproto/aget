@@ -8,6 +8,8 @@ Download the `ld-lsb` package from AUR:
 
 `aget ld-lsb`
 
+It can then be built and installed with `makepkg -i`.
+
 ## Installation
 
 One way is to install it from AUR, another way is:
@@ -17,5 +19,5 @@ One way is to install it from AUR, another way is:
 ## General information
 
 * Version: 1.0.0
-* Author: Alexander F. Rødseth <xyproto@archlinux.org>
+* Author: Alexander F. Rødseth &lt;xyproto@archlinux.org&gt;
 * License: MIT
