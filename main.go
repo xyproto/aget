@@ -69,10 +69,6 @@ func main() {
 					o.Printf("<red>%s</red>\n", stderrBuf.String())
 					continue
 				}
-				//if output, err := cmd.Output(); err != nil {
-				//	o.Printf("<darkred>Could not clone %s: %s</darkred>\n", packageName, output)
-				//	continue
-				//}
 			}
 			return err
 		},
