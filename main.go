@@ -48,7 +48,8 @@ func main() {
 			var err error
 			for _, packageName := range packageNames {
 				if _, err := os.Stat(packageName); err == nil {
-					o.Println("<darkred>Directory already exists.</darkred><yellow>Skipping: " + packageName + "</yellow>")
+					o.Print("<darkred>Directory already exists:</darkred> ")
+					o.Println("<yellow>" + packageName + "</yellow>")
 					continue
 				}
 				url := "ssh://aur@aur.archlinux.org/" + packageName + ".git"
