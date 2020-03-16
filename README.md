@@ -1,6 +1,6 @@
 # aget
 
-`git clone` a package from AUR (the unofficial Arch Linux package repository that contains user-submitted packages), without having to remembering the URL.
+`git clone` a package from AUR (the unofficial Arch Linux package repository that contains user-submitted packages), without having to remember the URL.
 
 ## Example use
 
