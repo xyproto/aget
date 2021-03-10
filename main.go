@@ -2,20 +2,36 @@ package main
 
 import (
 	"bytes"
-	"github.com/urfave/cli/v2"
-	"github.com/xyproto/textoutput"
 	"os"
 	"os/exec"
+	"strings"
+
+	"github.com/urfave/cli/v2"
+	"github.com/xyproto/textoutput"
 )
 
 const versionString = "aget 1.0.0"
 
-func isFile(path string) (bool, error) {
-	fileInfo, err := os.Stat(path)
-	if err != nil {
-		return false, err
+func run(o *textoutput.TextOutput, commandString string) error {
+	var stdoutBuf, stderrBuf bytes.Buffer
+	o.Println("<green>" + commandString + "</green>")
+	words := strings.Split(commandString, " ")
+	cmd := exec.Command(words[0], words[1:]...)
+	cmd.Stdout = &stdoutBuf
+	cmd.Stderr = &stderrBuf
+	if err := cmd.Start(); err != nil {
+		o.Printf("<yellow>%s</yellow>\n", err)
+		o.Printf("<yellow>%s</yellow>\n", stdoutBuf.String())
+		o.Printf("<red>%s</red>\n", stderrBuf.String())
+		return err
 	}
-	return fileInfo.Mode().IsRegular(), nil
+	if err := cmd.Wait(); err != nil {
+		o.Printf("<yellow>%s</yellow>\n", err)
+		o.Printf("<yellow>%s</yellow>\n", stdoutBuf.String())
+		o.Printf("<red>%s</red>\n", stderrBuf.String())
+		return err
+	}
+	return nil
 }
 
 func main() {
@@ -53,23 +69,24 @@ func main() {
 					continue
 				}
 				url := "ssh://aur@aur.archlinux.org/" + packageName + ".git"
-				o.Println("<green>git clone " + url + "</green>")
-				cmd := exec.Command("git", "clone", url)
-				var stdoutBuf, stderrBuf bytes.Buffer
-				cmd.Stdout = &stdoutBuf
-				cmd.Stderr = &stderrBuf
-				if err := cmd.Start(); err != nil {
-					o.Printf("<yellow>%s</yellow>\n", err)
-					o.Printf("<yellow>%s</yellow>\n", stdoutBuf.String())
-					o.Printf("<red>%s</red>\n", stderrBuf.String())
+
+				// git clone
+				if err := run(o, "git clone "+url); err != nil {
 					continue
 				}
-				if err := cmd.Wait(); err != nil {
-					o.Printf("<yellow>%s</yellow>\n", err)
-					o.Printf("<yellow>%s</yellow>\n", stdoutBuf.String())
-					o.Printf("<red>%s</red>\n", stderrBuf.String())
+
+				// cd packageName
+				o.Println("<green>cd " + packageName + "</green>")
+				if err := os.Chdir(packageName); err != nil {
+					o.Printf("<red>%s</red>\n", err)
 					continue
 				}
+
+				// switch to the master branch, in case the default branch name is ie. "main"
+				if err := run(o, "git switch -C master"); err != nil {
+					continue
+				}
+
 			}
 			return err
 		},
