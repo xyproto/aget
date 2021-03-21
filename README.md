@@ -18,6 +18,6 @@ One way is to install it from AUR, another way is:
 
 ## General information
 
-* Version: 1.0.0
+* Version: 1.1.0
 * Author: Alexander F. Rødseth &lt;xyproto@archlinux.org&gt;
 * License: MIT

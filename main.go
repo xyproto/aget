@@ -10,7 +10,7 @@ import (
 	"github.com/xyproto/textoutput"
 )
 
-const versionString = "aget 1.0.0"
+const versionString = "aget 1.1.0"
 
 func run(o *textoutput.TextOutput, commandString string) error {
 	var stdoutBuf, stderrBuf bytes.Buffer
