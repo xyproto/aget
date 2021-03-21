@@ -11,5 +11,5 @@ require (
 	github.com/urfave/cli/v2 v2.3.0
 	github.com/xyproto/textoutput v1.12.2
 	github.com/xyproto/vt100 v1.8.6 // indirect
-	golang.org/x/sys v0.0.0-20210309074719-68d13333faf2 // indirect
+	golang.org/x/sys v0.0.0-20210320140829-1e4c9ba3b0c4 // indirect
 )
