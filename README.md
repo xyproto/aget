@@ -7,7 +7,7 @@
 One way is to install it from AUR, another way is:
 
 ```sh
-sudo pacman -S base-devel go --noconfirm --needed
+sudo pacman -S base-devel git go --noconfirm --needed
 go get -u github.com/xyproto/aget
 sudo install -Dm755 ~/go/bin/aget /usr/bin/aget
 ```
