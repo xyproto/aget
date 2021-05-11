@@ -22,6 +22,6 @@ It can then be built and installed with `makepkg -i`.
 
 ## General information
 
-* Version: 1.1.0
+* Version: 1.2.0
 * Author: Alexander F. Rødseth &lt;xyproto@archlinux.org&gt;
-* License: MIT
+* License: BSD-3
