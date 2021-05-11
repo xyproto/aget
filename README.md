@@ -6,7 +6,7 @@
 
 One way is to install it from AUR, another way is:
 
-`sudo pacman -S go --noconfirm --needed && go get -u github.com/xyproto/aget`
+`sudo pacman -S go --noconfirm --needed && go get -u github.com/xyproto/aget && sudo install -Dm755 ~/go/bin/aget /usr/bin/aget`
 
 ## Example use
 
