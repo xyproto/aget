@@ -7,18 +7,30 @@
 One way is to install it from AUR, another way is:
 
 ```sh
-sudo pacman -S go --noconfirm --needed
+sudo pacman -S base-devel go --noconfirm --needed
 go get -u github.com/xyproto/aget
 sudo install -Dm755 ~/go/bin/aget /usr/bin/aget
 ```
 
 ## Example use
 
-Download the `ld-lsb` package from AUR:
+### Download and install a package from AUR
 
-`aget ld-lsb`
+First make sure that `base` and `base-devel` are installed.
 
-It can then be built and installed with `makepkg -i`.
+Then download the `ld-lsb` package from AUR:
+
+    aget ld-lsb
+
+Build and install it with `makepkg`:
+
+    makepkg -i
+
+### Create a new AUR package
+
+    aget newpackage
+
+Your ssh key must be set up at the [AUR web page](https://aur.archlinux.org) first for this to work.
 
 ## General information
 
