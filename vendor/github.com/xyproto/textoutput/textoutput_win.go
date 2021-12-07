@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 // Package textoutput offers a simple way to use vt100 and output colored text
@@ -5,6 +6,7 @@ package textoutput
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"strings"
 
@@ -76,22 +78,53 @@ func (o *TextOutput) Println(msg ...interface{}) {
 	}
 }
 
+// Write a message to the given io.Writer if output is enabled
+func (o *TextOutput) Fprintln(w io.Writer, msg ...interface{}) {
+	if o.enabled {
+		fmt.Fprintln(w, o.InterfaceTags(msg...))
+	}
+}
+
 // Write a message to stdout if output is enabled
 func (o *TextOutput) Printf(msg ...interface{}) {
-	if o.enabled {
-		if len(msg) == 0 {
-			return
-		} else if len(msg) == 1 {
-			if fmtString, ok := msg[0].(string); ok {
-				fmt.Print(fmtString)
-			}
-		} else { // > 1
-			if fmtString, ok := msg[0].(string); ok {
-				fmt.Printf(o.InterfaceTags(fmtString), msg[1:]...)
-			} else {
-				// fail
-				fmt.Printf("%v", msg...)
-			}
+	if !o.enabled {
+		return
+	}
+	count := len(msg)
+	if count == 0 {
+		return
+	} else if count == 1 {
+		if fmtString, ok := msg[0].(string); ok {
+			fmt.Print(fmtString)
+		}
+	} else { // > 1
+		if fmtString, ok := msg[0].(string); ok {
+			fmt.Printf(o.InterfaceTags(fmtString), msg[1:]...)
+		} else {
+			// fail
+			fmt.Printf("%v", msg...)
+		}
+	}
+}
+
+// Write a message to the given io.Writer if output is enabled
+func (o *TextOutput) Fprintf(w io.Writer, msg ...interface{}) {
+	if !o.enabled {
+		return
+	}
+	count := len(msg)
+	if count == 0 {
+		return
+	} else if count == 1 {
+		if fmtString, ok := msg[0].(string); ok {
+			fmt.Fprint(w, fmtString)
+		}
+	} else { // > 1
+		if fmtString, ok := msg[0].(string); ok {
+			fmt.Fprintf(w, o.InterfaceTags(fmtString), msg[1:]...)
+		} else {
+			// fail
+			fmt.Fprintf(w, "%v", msg...)
 		}
 	}
 }
@@ -100,6 +133,13 @@ func (o *TextOutput) Printf(msg ...interface{}) {
 func (o *TextOutput) Print(msg ...interface{}) {
 	if o.enabled {
 		fmt.Print(o.InterfaceTags(msg...))
+	}
+}
+
+// Write a message to the given io.Writer if output is enabled
+func (o *TextOutput) Fprint(w io.Writer, msg ...interface{}) {
+	if o.enabled {
+		fmt.Fprint(w, o.InterfaceTags(msg...))
 	}
 }
 
