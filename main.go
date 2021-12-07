@@ -11,7 +11,7 @@ import (
 	"github.com/xyproto/textoutput"
 )
 
-const versionString = "aget 1.3.0"
+const versionString = "aget 1.3.1"
 
 func run(o *textoutput.TextOutput, commandString string) error {
 	var stdoutBuf, stderrBuf bytes.Buffer
@@ -42,7 +42,7 @@ func main() {
 		Usage: "clone AUR packages with git",
 		Flags: []cli.Flag{
 			&cli.BoolFlag{Name: "silent", Aliases: []string{"s"}},
-			&cli.BoolFlag{Name: "https", Aliases: []string{"h", "http", "web"}},
+			&cli.BoolFlag{Name: "https", Aliases: []string{"http", "web"}},
 			&cli.BoolFlag{Name: "version", Aliases: []string{"V"}},
 		},
 		Action: func(c *cli.Context) error {
