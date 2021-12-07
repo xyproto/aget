@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -10,7 +11,7 @@ import (
 	"github.com/xyproto/textoutput"
 )
 
-const versionString = "aget 1.2.0"
+const versionString = "aget 1.3.0"
 
 func run(o *textoutput.TextOutput, commandString string) error {
 	var stdoutBuf, stderrBuf bytes.Buffer
@@ -41,6 +42,7 @@ func main() {
 		Usage: "clone AUR packages with git",
 		Flags: []cli.Flag{
 			&cli.BoolFlag{Name: "silent", Aliases: []string{"s"}},
+			&cli.BoolFlag{Name: "https", Aliases: []string{"h", "http", "web"}},
 			&cli.BoolFlag{Name: "version", Aliases: []string{"V"}},
 		},
 		Action: func(c *cli.Context) error {
@@ -68,7 +70,11 @@ func main() {
 					o.Println("<yellow>" + packageName + "</yellow>")
 					continue
 				}
-				url := "ssh://aur@aur.archlinux.org/" + packageName + ".git"
+				protocol := "ssh://"
+				if c.Bool("https") {
+					protocol = "https://"
+				}
+				url := fmt.Sprintf("%saur@aur.archlinux.org/%s.git", protocol, packageName)
 
 				// git clone
 				if err := run(o, "git clone "+url); err != nil {
