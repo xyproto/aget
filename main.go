@@ -50,17 +50,19 @@ func main() {
 				o.Println(versionString)
 				os.Exit(0)
 			}
+
 			// Check if text output should be disabled
 			if c.Bool("silent") {
 				o.Disable()
 			}
-			packageNames := []string{}
+
 			// Check if any arguments are given
-			if c.NArg() > 0 {
-				packageNames = c.Args().Slice()
-			} else {
-				o.ErrExit("Supply a package name as an argument")
+			if c.NArg() == 0 {
+				o.ErrExit("Please supply a package name as an argument")
 			}
+
+			// Interpret the arguments as package names
+			packageNames := c.Args().Slice()
 
 			// Treat all arguments as AUR packages that should be cloned
 			var err error
