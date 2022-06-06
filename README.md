@@ -12,6 +12,12 @@ go get -u github.com/xyproto/aget
 sudo install -Dm755 ~/go/bin/aget /usr/bin/aget
 ```
 
+An alternative to `go get` + `install` is to use `go install`:
+
+```sh
+go install github.com/xyproto/aget@latest
+```
+
 ## Example use
 
 ### Download and install a package from AUR
@@ -34,6 +40,6 @@ Your ssh key must be set up at the [AUR web page](https://aur.archlinux.org) fir
 
 ## General information
 
-* Version: 1.3.1
+* Version: 1.3.2
 * Author: Alexander F. Rødseth &lt;xyproto@archlinux.org&gt;
 * License: BSD-3
