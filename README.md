@@ -40,6 +40,6 @@ Your ssh key must be set up at the [AUR web page](https://aur.archlinux.org) fir
 
 ## General information
 
-* Version: 1.3.2
+* Version: 1.3.3
 * Author: Alexander F. Rødseth &lt;xyproto@archlinux.org&gt;
 * License: BSD-3
