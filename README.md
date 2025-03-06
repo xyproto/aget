@@ -2,6 +2,8 @@
 
 `git clone` a package from AUR (the unofficial Arch Linux package repository that contains user-submitted packages), without having to remember the URL.
 
+Your ssh key must be set up at the [AUR web page](https://aur.archlinux.org) first for this to work.
+
 ## Installation
 
 One way is to install it from AUR, another way is:
@@ -35,8 +37,6 @@ Build and install it with `makepkg`:
 ### Create a new AUR package
 
     aget newpackage
-
-Your ssh key must be set up at the [AUR web page](https://aur.archlinux.org) first for this to work.
 
 ## General information
 
