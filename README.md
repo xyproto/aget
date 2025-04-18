@@ -40,6 +40,6 @@ Build and install it with `makepkg`:
 
 ## General information
 
-* Version: 1.3.3
+* Version: 1.4.0
 * Author: Alexander F. Rødseth &lt;xyproto@archlinux.org&gt;
 * License: BSD-3
