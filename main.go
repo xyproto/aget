@@ -10,7 +10,7 @@ import (
 	"github.com/xyproto/textoutput"
 )
 
-const versionString = "aget 1.4.0"
+const versionString = "aget 1.4.1"
 
 func run(o *textoutput.TextOutput, commandString string) error {
 	var stdoutBuf, stderrBuf bytes.Buffer
@@ -46,6 +46,29 @@ func gitClone(o *textoutput.TextOutput, packageName string) error {
 	httpsURL := strings.Replace(sshURL, "ssh://aur@", "https://", 1)
 	o.Println("<yellow>Falling back to HTTPS...</yellow>")
 	return run(o, "git clone "+httpsURL)
+}
+
+func runInDir(o *textoutput.TextOutput, dir, commandString string) error {
+	var stdoutBuf, stderrBuf bytes.Buffer
+	o.Println("<green>" + commandString + "</green>")
+	words := strings.Fields(commandString)
+	cmd := exec.Command(words[0], words[1:]...)
+	cmd.Dir = dir
+	cmd.Stdout = &stdoutBuf
+	cmd.Stderr = &stderrBuf
+	if err := cmd.Start(); err != nil {
+		o.Printf("<yellow>%s</yellow>\n", err)
+		o.Printf("<yellow>%s</yellow>\n", stdoutBuf.String())
+		o.Printf("<red>%s</red>\n", stderrBuf.String())
+		return err
+	}
+	if err := cmd.Wait(); err != nil {
+		o.Printf("<yellow>%s</yellow>\n", err)
+		o.Printf("<yellow>%s</yellow>\n", stdoutBuf.String())
+		o.Printf("<red>%s</red>\n", stderrBuf.String())
+		return err
+	}
+	return nil
 }
 
 func main() {
@@ -91,16 +114,8 @@ func main() {
 					continue
 				}
 
-				// cd packageName
-				o.Println("<green>cd " + packageName + "</green>")
-				if chdirErr := os.Chdir(packageName); chdirErr != nil {
-					o.Printf("<red>%s</red>\n", chdirErr)
-					err = chdirErr
-					continue
-				}
-
-				// switch to the master branch, in case the default branch name is ie. "main"
-				if switchErr := run(o, "git switch -C master"); switchErr != nil {
+				// switch to the master branch explicitly in the package directory
+				if switchErr := runInDir(o, packageName, "git switch -C master"); switchErr != nil {
 					err = switchErr
 					continue
 				}
