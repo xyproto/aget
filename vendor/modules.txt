@@ -32,13 +32,13 @@ github.com/xyproto/burnfont
 # github.com/xyproto/env/v2 v2.5.3
 ## explicit; go 1.19
 github.com/xyproto/env/v2
-# github.com/xyproto/textoutput v1.17.1
-## explicit; go 1.22.0
+# github.com/xyproto/textoutput v1.17.2
+## explicit; go 1.23.0
 github.com/xyproto/textoutput
-# github.com/xyproto/vt100 v1.16.11
-## explicit; go 1.22.0
+# github.com/xyproto/vt100 v1.16.12
+## explicit; go 1.23.0
 github.com/xyproto/vt100
-# golang.org/x/sys v0.31.0
+# golang.org/x/sys v0.32.0
 ## explicit; go 1.23.0
 golang.org/x/sys/unix
 golang.org/x/sys/windows
