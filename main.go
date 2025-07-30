@@ -7,12 +7,12 @@ import (
 	"strings"
 
 	"github.com/urfave/cli/v2"
-	"github.com/xyproto/textoutput"
+	"github.com/xyproto/vt"
 )
 
 const versionString = "aget 1.4.1"
 
-func run(o *textoutput.TextOutput, commandString string) error {
+func run(o *vt.TextOutput, commandString string) error {
 	var stdoutBuf, stderrBuf bytes.Buffer
 	o.Println("<green>" + commandString + "</green>")
 	words := strings.Fields(commandString)
@@ -34,7 +34,7 @@ func run(o *textoutput.TextOutput, commandString string) error {
 	return nil
 }
 
-func gitClone(o *textoutput.TextOutput, packageName string) error {
+func gitClone(o *vt.TextOutput, packageName string) error {
 	sshURL := "ssh://aur@aur.archlinux.org/" + packageName + ".git"
 
 	// Try SSH first
@@ -48,7 +48,7 @@ func gitClone(o *textoutput.TextOutput, packageName string) error {
 	return run(o, "git clone "+httpsURL)
 }
 
-func runInDir(o *textoutput.TextOutput, dir, commandString string) error {
+func runInDir(o *vt.TextOutput, dir, commandString string) error {
 	var stdoutBuf, stderrBuf bytes.Buffer
 	o.Println("<green>" + commandString + "</green>")
 	words := strings.Fields(commandString)
@@ -72,7 +72,7 @@ func runInDir(o *textoutput.TextOutput, dir, commandString string) error {
 }
 
 func main() {
-	o := textoutput.New()
+	o := vt.New()
 	if appErr := (&cli.App{
 		Name:  "aget",
 		Usage: "clone AUR packages with git",
