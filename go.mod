@@ -6,7 +6,7 @@ toolchain go1.24.5
 
 require (
 	github.com/urfave/cli/v2 v2.27.7
-	github.com/xyproto/vt v1.2.6
+	github.com/xyproto/vt v1.2.8
 )
 
 require (
