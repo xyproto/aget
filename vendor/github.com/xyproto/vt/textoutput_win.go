@@ -1,8 +1,7 @@
 //go:build windows
 // +build windows
 
-// Package textoutput offers a simple way to use vt100 and output colored text
-package textoutput
+package vt
 
 import (
 	"fmt"
@@ -155,17 +154,6 @@ func (o *TextOutput) Err(msg string) {
 	}
 }
 
-// Write an error message to stderr and quit with exit code 1
-func (o *TextOutput) ErrExit(msg string) {
-	o.Err(msg)
-	os.Exit(1)
-}
-
-// Deprectated
-func (o *TextOutput) IsEnabled() bool {
-	return o.enabled
-}
-
 // Enabled returns true if any output is enabled
 func (o *TextOutput) Enabled() bool {
 	return o.enabled
@@ -249,13 +237,6 @@ func (o *TextOutput) LightYellow(s string) string {
 func (o *TextOutput) LightBlue(s string) string {
 	if o.color {
 		return ansi.Color(s, "blue+h")
-	}
-	return s
-}
-
-func (o *TextOutput) LightPurple(s string) string {
-	if o.color {
-		return ansi.Color(s, "magenta+h")
 	}
 	return s
 }
@@ -472,7 +453,7 @@ func (o *TextOutput) initializeTagReplacers() {
 // 					currentColor = currentColor[1:]
 // 				}
 // 				// currentColor now contains the last found color attributes,
-// 				// but as a vt100.AttributeColor.
+// 				// but as an AttributeColor.
 // 				colorcode.Reset()
 // 				escaped = false
 // 			}

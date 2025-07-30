@@ -1,4 +1,4 @@
-package vt100
+package vt
 
 import (
 	"errors"
@@ -355,29 +355,9 @@ func (tty *TTY) Term() *term.Term {
 	return tty.t
 }
 
-// asciiAndKeyCodeOnce reads a single key press and returns the ASCII code and key code
-func asciiAndKeyCodeOnce() (ascii, keyCode int, err error) {
-	t, err := NewTTY()
-	if err != nil {
-		return 0, 0, err
-	}
-	a, kc, err := asciiAndKeyCode(t)
-	t.Close()
-	return a, kc, err
-}
-
 // ASCII returns the ASCII code of the key pressed
 func (tty *TTY) ASCII() int {
 	ascii, _, err := asciiAndKeyCode(tty)
-	if err != nil {
-		return 0
-	}
-	return ascii
-}
-
-// ASCIIOnce returns the ASCII code of a single key press
-func ASCIIOnce() int {
-	ascii, _, err := asciiAndKeyCodeOnce()
 	if err != nil {
 		return 0
 	}
@@ -393,16 +373,7 @@ func (tty *TTY) KeyCode() int {
 	return keyCode
 }
 
-// KeyCodeOnce returns the key code of a single key press
-func KeyCodeOnce() int {
-	_, keyCode, err := asciiAndKeyCodeOnce()
-	if err != nil {
-		return 0
-	}
-	return keyCode
-}
-
-// WaitForKey waits for Return, Esc, Space, or 'q' to be pressed
+// WaitForKey waits for ctrl-c, Return, Esc, Space, or 'q' to be pressed
 func WaitForKey() {
 	// Get a new TTY and start reading keypresses in a loop
 	r, err := NewTTY()
@@ -412,7 +383,7 @@ func WaitForKey() {
 	defer r.Close()
 	for {
 		switch r.Key() {
-		case 13, 27, 32, 113:
+		case 3, 13, 27, 32, 113:
 			return
 		}
 	}
