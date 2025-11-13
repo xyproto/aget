@@ -10,7 +10,7 @@ import (
 	"github.com/xyproto/vt"
 )
 
-const versionString = "aget 1.4.2"
+const versionString = "aget 1.4.3"
 
 func run(o *vt.TextOutput, commandString string) error {
 	var stdoutBuf, stderrBuf bytes.Buffer
