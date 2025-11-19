@@ -2,7 +2,7 @@
 
 `git clone` a package from AUR (the unofficial Arch Linux package repository that contains user-submitted packages), without having to remember the URL.
 
-Your ssh key should be set up at the [AUR web page](https://aur.archlinux.org) first for this to work (the https fallback will be used if not set up).
+Your ssh key should be set up at the [AUR web page](https://aur.archlinux.org) first for this to work (the HTTPS fallback will be used if not set up).
 
 ## Installation
 
