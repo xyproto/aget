@@ -6,19 +6,16 @@ Your ssh key should be set up at the [AUR web page](https://aur.archlinux.org) f
 
 ## Installation
 
-One way is to install it from AUR, another way is:
-
-```sh
-sudo pacman -S base-devel git go --noconfirm --needed
-go get -u github.com/xyproto/aget
-sudo install -Dm755 ~/go/bin/aget /usr/bin/aget
-```
-
-An alternative to `go get` + `install` is to use `go install`:
+Install `go` and `git`, then:
 
 ```sh
 go install github.com/xyproto/aget@latest
 ```
+
+Then just run it as `~/go/bin/aget` OR
+* set up an alias with `alias aget=~/go/bin/aget` OR
+* add `~/go/bin` to the `PATH` OR
+* install it to `/usr/bin` with ie. `sudo install -Dm755 ~/go/bin/aget /usr/bin/aget`.
 
 ## Example use
 
